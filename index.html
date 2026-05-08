@@ -340,7 +340,7 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
       <div class="note-wrapper">
         <!-- 글감 칩 -->
         <div class="sidebar-chips-wrap">
-          <div class="sidebar-chips-label">글감 삽입</div>
+          <div class="sidebar-chips-label">글감 삽입 <span style="font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink4);font-size:0.58rem;">— 탭하면 글쓰기 칸에 바로 추가돼요</span></div>
           <div class="sidebar-chips" id="sidebar-chips"></div>
         </div>
         <!-- 제목 -->
@@ -373,13 +373,14 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
         <button class="spell-tab" onclick="switchSpellTab('ai',this)">AI 교정</button>
       </div>
       <div id="spell-link" class="spell-panel active">
-        <p style="font-size:0.78rem;color:var(--ink3);">버튼을 누르면 글이 자동 복사되고 검사기 사이트가 열립니다.</p>
+        <p style="font-size:0.78rem;color:var(--ink3);">① 아래 글을 입력 → ② 복사 버튼 → ③ 검사기 사이트에서 붙여넣기</p>
         <textarea class="spell-textarea" id="spell-ext-area" placeholder="검사할 글을 붙여넣거나 입력하세요…"></textarea>
+        <button class="btn btn-dark" onclick="copySpellText()" style="width:100%;">① 글 복사하기</button>
         <div class="spell-links">
-          <button class="btn" onclick="copyAndOpen('pusan')">부산대 맞춤법 →</button>
-          <button class="btn" onclick="copyAndOpen('naver')">네이버 맞춤법 →</button>
+          <button class="btn" onclick="openSpell('saramin')">② 사람인 맞춤법 검사기 →</button>
+          <button class="btn" onclick="openSpell('naver')">② 네이버 맞춤법 검사기 →</button>
         </div>
-        <div class="spell-info">사이트가 열리면 <strong>길게 눌러 붙여넣기</strong> 하세요. 부산대: 500자 단위.</div>
+        <div class="spell-info">먼저 <strong>글 복사하기</strong>를 누른 후 검사기 사이트가 열리면 입력창에 <strong>길게 눌러 붙여넣기</strong> 하세요.</div>
       </div>
       <div id="spell-copy" class="spell-panel">
         <p style="font-size:0.78rem;color:var(--ink3);">글을 붙여넣고 복사해서 원하는 곳에 사용하세요.</p>
@@ -391,14 +392,16 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
         </div>
       </div>
       <div id="spell-ai" class="spell-panel">
-        <p style="font-size:0.78rem;color:var(--ink3);">AI가 맞춤법·띄어쓰기를 교정하고 설명합니다.</p>
+        <p style="font-size:0.78rem;color:var(--ink3);">GitHub Pages에서는 AI 직접 교정이 불가해요.<br>아래에서 글을 복사한 후 Claude에 붙여넣어 교정받으세요.</p>
         <textarea class="spell-textarea" id="spell-ai-area" placeholder="교정할 글을 입력하거나 붙여넣으세요…"></textarea>
         <div class="spell-links">
-          <button class="btn btn-dark" onclick="runAISpell()">AI 교정 실행</button>
+          <button class="btn btn-dark" onclick="copyForClaude()">글 복사 + Claude 열기</button>
           <button class="btn" onclick="importNote('spell-ai-area')">노트에서 가져오기</button>
         </div>
-        <div class="ai-result" id="ai-result" style="font-style:italic;font-size:0.82rem;color:var(--ink4);">교정 결과가 여기에 표시됩니다.</div>
-        <div class="spell-links"><button class="btn" onclick="copyElem('ai-result')">결과 복사</button></div>
+        <div class="spell-info">
+          <strong>방법:</strong> 복사 버튼 → Claude.ai 열림 → 새 대화에서 붙여넣기 후<br>
+          <em>"맞춤법과 띄어쓰기를 교정해줘"</em> 라고 입력하세요.
+        </div>
       </div>
     </div>
 
@@ -572,18 +575,21 @@ function renderChips(){
     });
     hasAny=true;
   });
-  if(!html)html='<span class="no-items-chip">바구니가 비어있습니다</span>';
+  if(!html)html='<span class="no-items-chip">글감 없음 — 바로 써도 돼요 ✍️</span>';
   chips.innerHTML=html;
 }
 
 function insertNote(text){
   const ta=el('note-area');
+  ta.focus();
   const s=ta.selectionStart,e2=ta.selectionEnd;
   const before=ta.value.slice(0,s),after=ta.value.slice(e2);
   const ins=(before.length&&!before.endsWith('\n')&&!before.endsWith(' ')?' ':'')+text;
   ta.value=before+ins+after;
   ta.selectionStart=ta.selectionEnd=s+ins.length;
-  ta.focus();persist();
+  // iOS에서 커서 위치 갱신 트리거
+  ta.dispatchEvent(new Event('input',{bubbles:true}));
+  persist();
 }
 
 /* VERSIONS */
@@ -636,9 +642,32 @@ function switchSpellTab(tab,btn){
   document.querySelectorAll('.spell-tab').forEach(b=>b.classList.remove('active'));
   el('spell-'+tab).classList.add('active');btn.classList.add('active');
 }
-function copyAndOpen(site){
-  navigator.clipboard.writeText(el('spell-ext-area').value).then(()=>{
-    window.open({pusan:'https://speller.cs.pusan.ac.kr/',naver:'https://search.naver.com/search.naver?query=%EB%A7%9E%EC%B6%A4%EB%B2%95+%EA%B2%80%EC%82%AC%EA%B8%B0'}[site],'_blank');
+function copySpellText(){
+  const text=el('spell-ext-area').value.trim();
+  if(!text){alert('검사할 글을 먼저 입력해주세요.');return;}
+  navigator.clipboard.writeText(text).then(()=>alert('복사 완료! 이제 검사기 버튼을 눌러주세요.')).catch(()=>{
+    // clipboard 실패 시 선택 방식으로 대체
+    el('spell-ext-area').select();
+    document.execCommand('copy');
+    alert('복사 완료! 이제 검사기 버튼을 눌러주세요.');
+  });
+}
+function openSpell(site){
+  const urls={
+    saramin:'https://www.saramin.co.kr/zf_user/tools/spell-check',
+    naver:'https://search.naver.com/search.naver?where=nexearch&query=%EB%A7%9E%EC%B6%A4%EB%B2%95+%EA%B2%80%EC%82%AC%EA%B8%B0'
+  };
+  window.open(urls[site],'_blank');
+}
+function copyForClaude(){
+  const text=el('spell-ai-area').value.trim();
+  if(!text){alert('교정할 글을 먼저 입력해주세요.');return;}
+  const prompt='다음 글의 맞춤법과 띄어쓰기를 교정해줘:\n\n'+text;
+  navigator.clipboard.writeText(prompt).then(()=>{
+    alert('교정 요청 문구가 복사됐어요.\nClaude.ai에서 붙여넣기 하세요!');
+    window.open('https://claude.ai','_blank');
+  }).catch(()=>{
+    window.open('https://claude.ai','_blank');
   });
 }
 function copyText(id){navigator.clipboard.writeText(el(id).value).then(()=>alert('복사되었어요!'));}
