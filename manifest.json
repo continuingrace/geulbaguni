@@ -1,0 +1,12 @@
+{
+  "name": "글짓기 바구니",
+  "short_name": "글짓기",
+  "start_url": "/geulbaguni/",
+  "display": "standalone",
+  "background_color": "#f4f0ea",
+  "theme_color": "#f4f0ea",
+  "icons": [
+    {"src": "icon.png", "sizes": "192x192", "type": "image/png"},
+    {"src": "icon.png", "sizes": "512x512", "type": "image/png"}
+  ]
+}
