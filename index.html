@@ -734,34 +734,61 @@ function renderArchive(){
 
 /* BACKUP */
 function openBackup(){
-  persist();const json=JSON.stringify(S,null,2);
+  persist();
+  const json=JSON.stringify(S,null,2);
   el('modal-title').textContent='데이터 백업';
-  el('modal-desc').textContent='아래 텍스트를 복사하거나 파일로 저장하세요.';
+  el('modal-desc').textContent='JSON 파일로 저장하거나 텍스트를 복사해 보관하세요.';
   el('modal-ta').readOnly=true;el('modal-ta').value=json;el('modal-btns').innerHTML='';
-  const cb=document.createElement('button');cb.className='btn btn-dark';cb.textContent='전체 복사';
+  const dl=document.createElement('button');dl.className='btn btn-dark';dl.textContent='📁 파일로 저장';
+  dl.onclick=()=>{
+    const a=document.createElement('a');
+    a.href=URL.createObjectURL(new Blob([json],{type:'application/json'}));
+    a.download='geul-backup-'+fmtF(new Date())+'.json';a.click();
+  };
+  const cb=document.createElement('button');cb.className='btn';cb.textContent='텍스트 복사';
   cb.onclick=()=>navigator.clipboard.writeText(json).then(()=>alert('복사되었어요!'));
-  const dl=document.createElement('button');dl.className='btn';dl.textContent='파일로 저장';
-  dl.onclick=()=>{const a=document.createElement('a');a.href=URL.createObjectURL(new Blob([json],{type:'application/json'}));a.download='geul-backup-'+fmtF(new Date())+'.json';a.click();};
   const cl=document.createElement('button');cl.className='btn';cl.textContent='닫기';cl.onclick=closeModal;
-  el('modal-btns').append(cb,dl,cl);el('modal-overlay').classList.add('open');
+  el('modal-btns').append(dl,cb,cl);
+  el('modal-overlay').classList.add('open');
 }
+
 function openRestore(){
   el('modal-title').textContent='데이터 복구';
-  el('modal-desc').textContent='백업 JSON을 붙여넣고 복구 버튼을 누르세요.';
+  el('modal-desc').textContent='백업 파일을 선택하거나 JSON 텍스트를 붙여넣으세요.';
   el('modal-ta').readOnly=false;el('modal-ta').value='';el('modal-btns').innerHTML='';
-  const rv=document.createElement('button');rv.className='btn btn-dark';rv.textContent='복구 실행';
+
+  // 파일 선택 input (숨김)
+  const fileInput=document.createElement('input');
+  fileInput.type='file';fileInput.accept='.json,application/json';
+  fileInput.style.display='none';
+  fileInput.onchange=e=>{
+    const file=e.target.files[0];if(!file)return;
+    const reader=new FileReader();
+    reader.onload=ev=>{el('modal-ta').value=ev.target.result;};
+    reader.readAsText(file);
+  };
+  document.body.appendChild(fileInput);
+
+  const fb=document.createElement('button');fb.className='btn btn-dark';fb.textContent='📁 파일 선택';
+  fb.onclick=()=>fileInput.click();
+
+  const rv=document.createElement('button');rv.className='btn';rv.textContent='복구 실행';
   rv.onclick=()=>{
     try{
       const parsed=JSON.parse(el('modal-ta').value);
-      if(!parsed.items||!parsed.versions)throw new Error('올바른 백업 데이터가 아닙니다.');
+      if(!parsed.items||!parsed.versions)throw new Error('올바른 백업 파일이 아닙니다.');
       if(!confirm('현재 데이터를 덮어쓸까요?'))return;
-      S={...S,...parsed};persist();renderItems();renderVersions();renderChips();drawPapers();updateHomeBadge();
+      S={...S,...parsed};
+      persist();renderItems();renderVersions();renderChips();drawPapers();updateHomeBadge();
       el('note-title').value=S.note.title||'';el('note-area').value=S.note.body||'';
+      document.body.removeChild(fileInput);
       closeModal();alert('복구 완료!');
     }catch(e){alert('오류: '+e.message);}
   };
-  const cl=document.createElement('button');cl.className='btn';cl.textContent='취소';cl.onclick=closeModal;
-  el('modal-btns').append(rv,cl);el('modal-overlay').classList.add('open');
+  const cl=document.createElement('button');cl.className='btn';cl.textContent='취소';
+  cl.onclick=()=>{document.body.removeChild(fileInput);closeModal();};
+  el('modal-btns').append(fb,rv,cl);
+  el('modal-overlay').classList.add('open');
 }
 function closeModal(){el('modal-overlay').classList.remove('open');}
 
