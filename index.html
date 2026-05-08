@@ -3,7 +3,7 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width,initial-scale=1.0">
-<title>글바구니</title>
+<title>글짓기 바구니</title>
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 @font-face {
@@ -440,15 +440,28 @@ function drawPapers(){
 }
 function enterApp(){
   el('splash').classList.add('fade');
-  setTimeout(()=>{el('splash').style.display='none';el('app').classList.add('show');},480);
+  setTimeout(()=>{
+    el('splash').style.display='none';
+    el('splash').classList.remove('fade');
+    el('app').style.display='flex';
+    el('app').classList.add('show');
+  },480);
 }
 function goSplash(){
   drawPapers();
-  el('app').classList.remove('show');el('app').style.display='none';
-  el('splash').style.display='flex';el('splash').style.opacity='0';
-  el('splash').classList.remove('fade');
-  requestAnimationFrame(()=>{el('splash').style.transition='opacity .4s ease';el('splash').style.opacity='1';});
-  setTimeout(()=>{el('splash').style.transition='';},450);
+  el('app').classList.remove('show');
+  el('app').style.display='none';
+  const sp=el('splash');
+  sp.style.display='flex';
+  sp.style.opacity='0';
+  sp.classList.remove('fade');
+  requestAnimationFrame(()=>{
+    requestAnimationFrame(()=>{
+      sp.style.transition='opacity .4s ease';
+      sp.style.opacity='1';
+    });
+  });
+  setTimeout(()=>{ sp.style.transition=''; },450);
 }
 function updateHomeBadge(){
   const n=S.items.length;
