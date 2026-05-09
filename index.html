@@ -207,7 +207,7 @@ input:focus, textarea:focus, select:focus { outline:none; border-color:var(--ink
   max-height:280px; overflow-y:auto; -webkit-overflow-scrolling:touch;
   border-top:1px solid var(--line);
   background:var(--bg2);
-  padding:8px 12px;
+  padding:8px 12px 32px;
   display:none; flex-direction:column; gap:5px;
 }
 .ver-section.visible { display:flex; }
@@ -412,10 +412,14 @@ input:focus, textarea:focus, select:focus { outline:none; border-color:var(--ink
         <p style="font-size:0.78rem;color:var(--ink3);">Claude가 맞춤법·문장을 교정하고 자연스럽게 다듬어줘요.</p>
         <textarea class="spell-textarea" id="spell-ai-area" placeholder="교정받을 글을 붙여넣거나 노트에서 가져오세요…"></textarea>
         <div class="spell-links">
-          <button class="btn btn-dark" onclick="copyForClaude()" style="flex:1;">Claude로 교정받기</button>
+          <button class="btn btn-dark" onclick="runAISpell()" style="flex:1;" id="ai-spell-btn">✨ AI 교정 실행</button>
           <button class="btn" onclick="importToSpell('spell-ai-area')">노트에서 가져오기</button>
         </div>
-        <div class="spell-info">버튼을 누르면 교정 요청 문구가 복사되고 Claude.ai가 <strong>새 창</strong>으로 열려요.</div>
+        <div id="ai-spell-result" style="display:none;background:var(--paper);border:1px solid var(--line);border-radius:var(--r);padding:12px 14px;font-family:var(--serif);font-size:0.88rem;line-height:1.85;white-space:pre-wrap;color:var(--ink2);margin-top:2px;"></div>
+        <div class="spell-links" id="ai-spell-copy-row" style="display:none;">
+          <button class="btn" onclick="copyElem('ai-spell-result')" style="flex:1;">결과 복사</button>
+        </div>
+        <div class="spell-info">앱 안에서 바로 교정 결과를 받아요. 새 창 이동 없이 사용 가능해요.</div>
       </div>
       <div id="spell-naver" class="spell-panel">
         <p style="font-size:0.78rem;color:var(--ink3);">네이버 맞춤법 검사기로 띄어쓰기·맞춤법을 확인하세요.</p>
