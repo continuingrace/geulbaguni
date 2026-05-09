@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <html lang="ko">
 <head>
 <meta charset="UTF-8">
@@ -14,8 +15,7 @@
 <link href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@300;400;500;600&display=swap" rel="stylesheet">
 <style>
 @import url('https://cdn.jsdelivr.net/gh/orioncactus/pretendard/dist/web/static/pretendard.css');
-
-:root{
+:root {
   --ink:#1c1a18; --ink2:#4a4540; --ink3:#8a847c; --ink4:#b8b0a6;
   --charcoal:#2c2a26;
   --bg:#f4f0ea; --bg2:#ece7df; --bg3:#e2dbd0;
@@ -23,9 +23,7 @@
   --warm:#8c7355; --warm2:#c4a882;
   --serif:'Noto Serif KR','KoPub Batang',Georgia,serif;
   --sans:'Pretendard','Apple SD Gothic Neo',sans-serif;
-  --r:8px;
-  --header-h:54px;
-  --tab-h:40px;
+  --r:8px; --header-h:54px; --tab-h:40px;
 }
 *{box-sizing:border-box;margin:0;padding:0;}
 html,body{height:100%;overflow:hidden;}
@@ -36,80 +34,69 @@ body{
     repeating-linear-gradient(0deg,transparent,transparent 28px,rgba(0,0,0,0.018) 28px,rgba(0,0,0,0.018) 29px);
 }
 
-/* ── SPLASH ── */
+/* SPLASH */
 #splash{
-  position:fixed;inset:0;z-index:300;
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  background:var(--bg);
-  background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='400' height='400'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.75' numOctaves='4' stitchTiles='stitch'/%3E%3CfeColorMatrix type='saturate' values='0'/%3E%3C/filter%3E%3Crect width='400' height='400' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
-  cursor:pointer;transition:opacity .5s ease;
+position:fixed;inset:0;z-index:300;
+display:flex;flex-direction:column;align-items:center;justify-content:center;
+background:var(–bg);
+background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘400’ height=‘400’%3E%3Cfilter id=‘n’%3E%3CfeTurbulence type=‘fractalNoise’ baseFrequency=‘0.75’ numOctaves=‘4’ stitchTiles=‘stitch’/%3E%3CfeColorMatrix type=‘saturate’ values=‘0’/%3E%3C/filter%3E%3Crect width=‘400’ height=‘400’ filter=‘url(%23n)’ opacity=‘0.06’/%3E%3C/svg%3E”);
+cursor:pointer;transition:opacity .5s ease;
 }
 #splash.fade{opacity:0;pointer-events:none;}
 .splash-logo{
-  font-family:var(--serif);font-weight:300;font-size:2.05rem;
-  letter-spacing:0.22em;text-indent:0.22em;color:var(--ink);line-height:1;
+font-family:var(–serif);font-weight:300;font-size:2.05rem;
+letter-spacing:0.22em;text-indent:0.22em;color:var(–ink);line-height:1;
 }
-.splash-count{margin-top:48px;font-family:var(--sans);font-size:0.63rem;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);}
-.splash-hint{margin-top:44px;font-family:var(--sans);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(--ink4);animation:blink 2.2s infinite;}
+.splash-count{margin-top:48px;font-family:var(–sans);font-size:0.63rem;letter-spacing:0.18em;text-transform:uppercase;color:var(–ink3);}
+.splash-hint{margin-top:44px;font-family:var(–sans);font-size:0.6rem;letter-spacing:0.22em;text-transform:uppercase;color:var(–ink4);animation:blink 2.2s infinite;}
 @keyframes blink{0%,100%{opacity:.35}50%{opacity:1}}
 
-/* ── APP 전체 레이아웃 ── */
+/* APP */
 #app{display:none;flex-direction:column;height:100%;height:100dvh;}
 #app.show{display:flex;}
 
-/* 헤더 */
 .app-header{
-  flex-shrink:0;
-  display:flex;align-items:center;gap:10px;
-  padding:0 16px;height:var(--header-h);
-  border-bottom:1.5px solid var(--ink);
-  background:var(--bg);
+flex-shrink:0;display:flex;align-items:center;gap:10px;
+padding:0 16px;height:var(–header-h);
+border-bottom:1.5px solid var(–ink);background:var(–bg);
 }
-.app-logo{font-family:var(--serif);font-weight:300;font-size:1.05rem;letter-spacing:0.1em;color:var(--ink);}
-.app-wordmark{font-size:0.65rem;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:var(--ink3);}
+.app-logo{font-family:var(–serif);font-weight:300;font-size:1.05rem;letter-spacing:0.1em;color:var(–ink);}
+.app-wordmark{font-size:0.65rem;font-weight:300;letter-spacing:0.18em;text-transform:uppercase;color:var(–ink3);}
 .header-actions{margin-left:auto;display:flex;gap:6px;align-items:center;}
 
-/* 탭바 */
-.tab-bar{
-  flex-shrink:0;display:flex;
-  height:var(--tab-h);
-  background:var(--bg2);
-  border-bottom:1px solid var(--line);
-}
+.tab-bar{flex-shrink:0;display:flex;height:var(–tab-h);background:var(–bg2);border-bottom:1px solid var(–line);}
 .tab-btn{
-  flex:1;padding:0 4px;
-  font-family:var(--sans);font-size:0.65rem;font-weight:600;
-  letter-spacing:0.08em;text-transform:uppercase;
-  border:none;border-bottom:2px solid transparent;
-  background:transparent;color:var(--ink3);
-  cursor:pointer;transition:all .18s;
+flex:1;padding:0 4px;
+font-family:var(–sans);font-size:0.65rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+border:none;border-bottom:2px solid transparent;
+background:transparent;color:var(–ink3);cursor:pointer;transition:all .18s;
+-webkit-tap-highlight-color:transparent;
 }
-.tab-btn:hover{color:var(--ink);}
-.tab-btn.active{color:var(--ink);border-bottom-color:var(--ink);background:var(--paper);}
+.tab-btn:hover{color:var(–ink);}
+.tab-btn.active{color:var(–ink);border-bottom-color:var(–ink);background:var(–paper);}
 
-/* 탭 콘텐츠 영역 */
 .tab-content{flex:1;overflow:hidden;position:relative;}
-.tab-panel{
-  display:none;position:absolute;inset:0;
-  overflow-y:auto;
-  background:var(--paper);
-  padding:14px;
-}
+.tab-panel{display:none;position:absolute;inset:0;overflow-y:auto;background:var(–paper);padding:14px;}
 .tab-panel.active{display:flex;flex-direction:column;gap:10px;}
 
 /* 공통 */
-input,textarea,select{font-family:var(--sans);color:var(--ink);background:var(--bg);border:1px solid var(--line);border-radius:5px;transition:border-color .18s;-webkit-appearance:none;}
-input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
-::placeholder{color:var(--ink4);}
-.btn{
-  font-family:var(--sans);font-size:0.68rem;font-weight:600;letter-spacing:0.06em;text-transform:uppercase;
-  padding:6px 12px;border-radius:4px;border:1px solid var(--line);
-  cursor:pointer;transition:all .18s;background:var(--bg);color:var(--ink2);white-space:nowrap;
-  -webkit-tap-highlight-color:transparent;
+input,textarea,select{
+font-family:var(–sans);color:var(–ink);
+background:var(–bg);border:1px solid var(–line);
+border-radius:5px;transition:border-color .18s;-webkit-appearance:none;
 }
-.btn:hover,.btn:active{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
-.btn-dark{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
-.btn-dark:hover,.btn-dark:active{background:var(--ink2);}
+input:focus,textarea:focus,select:focus{outline:none;border-color:var(–ink3);}
+::placeholder{color:var(–ink4);}
+.btn{
+font-family:var(–sans);font-size:0.68rem;font-weight:600;
+letter-spacing:0.06em;text-transform:uppercase;
+padding:6px 12px;border-radius:4px;border:1px solid var(–line);
+cursor:pointer;transition:all .18s;background:var(–bg);color:var(–ink2);white-space:nowrap;
+-webkit-tap-highlight-color:transparent;
+}
+.btn:hover,.btn:active{background:var(–charcoal);color:#fff;border-color:var(–charcoal);}
+.btn-dark{background:var(–charcoal);color:#fff;border-color:var(–charcoal);}
+.btn-dark:hover,.btn-dark:active{background:var(–ink2);}
 .btn-sm{padding:5px 10px;font-size:0.62rem;}
 .btn-danger{color:#8b3030;border-color:#d4b8b8;}
 .btn-danger:hover,.btn-danger:active{background:#8b3030;color:#fff;border-color:#8b3030;}
@@ -119,141 +106,118 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
 .tag-단어{background:#f0e8db;color:#5a3820;border:1px solid #d8c4a8;}
 .tag-기타{background:#ebe0f0;color:#3d1a5a;border:1px solid #cdb8e0;}
 
-/* ── BASKET ── */
+/* BASKET */
 .cat-filter{display:flex;gap:4px;flex-wrap:wrap;}
 .cat-btn{
-  font-family:var(--sans);font-size:0.62rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
-  padding:5px 10px;border-radius:14px;border:1px solid var(--line);
-  background:transparent;color:var(--ink3);cursor:pointer;transition:all .18s;
-  -webkit-tap-highlight-color:transparent;
+font-family:var(–sans);font-size:0.62rem;font-weight:600;letter-spacing:0.07em;text-transform:uppercase;
+padding:5px 10px;border-radius:14px;border:1px solid var(–line);
+background:transparent;color:var(–ink3);cursor:pointer;transition:all .18s;
+-webkit-tap-highlight-color:transparent;
 }
-.cat-btn.sel{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
-.add-form{display:flex;flex-direction:column;gap:8px;background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:10px;}
+.cat-btn.sel{background:var(–charcoal);color:#fff;border-color:var(–charcoal);}
+.add-form{display:flex;flex-direction:column;gap:8px;background:var(–bg);border:1px solid var(–line);border-radius:var(–r);padding:10px;}
 .add-form-row{display:flex;gap:8px;}
 .add-form select{padding:8px 10px;font-size:0.8rem;flex:0 0 auto;border-radius:5px;}
 .add-form textarea{width:100%;padding:8px 10px;font-size:0.88rem;resize:none;height:72px;border-radius:5px;}
 .items-list{display:flex;flex-direction:column;gap:8px;}
-.item-card{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:12px;display:flex;flex-direction:column;gap:6px;}
+.item-card{background:var(–bg);border:1px solid var(–line);border-radius:var(–r);padding:12px;display:flex;flex-direction:column;gap:6px;}
 .item-header{display:flex;align-items:center;gap:7px;}
-.item-date{font-size:0.6rem;color:var(--ink4);margin-left:auto;}
-.item-body{font-size:0.88rem;line-height:1.7;white-space:pre-wrap;color:var(--ink2);}
+.item-date{font-size:0.6rem;color:var(–ink4);margin-left:auto;}
+.item-body{font-size:0.88rem;line-height:1.7;white-space:pre-wrap;color:var(–ink2);}
 .item-actions{display:flex;gap:6px;}
-.item-edit-area{width:100%;padding:8px 10px;border:1px solid var(--warm2);border-radius:5px;font-size:0.88rem;resize:none;font-family:var(--sans);}
-.empty-msg{text-align:center;color:var(--ink4);font-size:0.8rem;padding:40px 20px;letter-spacing:0.06em;line-height:1.8;}
+.item-edit-area{width:100%;padding:8px 10px;border:1px solid var(–warm2);border-radius:5px;font-size:0.88rem;resize:none;font-family:var(–sans);}
+.empty-msg{text-align:center;color:var(–ink4);font-size:0.8rem;padding:40px 20px;letter-spacing:0.06em;line-height:1.8;}
 
-/* ── NOTE 모바일 최적화 ── */
-/* 사이드바: 모바일에서 드로어(슬라이드) 방식 */
+/* NOTE */
 .note-wrapper{display:flex;flex-direction:column;flex:1;overflow:hidden;gap:8px;}
-
-/* 글감 삽입 — 가로 스크롤 칩 방식 */
-.sidebar-chips-wrap{flex-shrink:0;}
-.sidebar-chips-label{font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(--ink4);margin-bottom:5px;}
-.sidebar-chips{display:flex;gap:5px;overflow-x:auto;padding-bottom:4px;-webkit-overflow-scrolling:touch;}
-.sidebar-chips::-webkit-scrollbar{display:none;}
-.sidebar-chip-cat{display:flex;align-items:center;gap:4px;flex-shrink:0;}
-.sidebar-chip-divider{width:1px;height:16px;background:var(--line);flex-shrink:0;margin:0 2px;}
-.chip{
-  flex-shrink:0;padding:5px 10px;
-  background:var(--bg);border:1px solid var(--line);border-radius:14px;
-  font-size:0.75rem;cursor:pointer;color:var(--ink2);
-  white-space:nowrap;transition:all .15s;
-  -webkit-tap-highlight-color:transparent;
+.insert-wrap{flex-shrink:0;display:flex;flex-direction:column;gap:6px;}
+.insert-label{font-size:0.6rem;font-weight:700;letter-spacing:0.14em;text-transform:uppercase;color:var(–ink4);}
+.insert-row{display:flex;gap:6px;align-items:center;}
+.insert-select{
+flex:1;padding:8px 10px;font-size:0.82rem;
+background:var(–bg);border:1px solid var(–line);border-radius:6px;
+color:var(–ink);font-family:var(–sans);
+-webkit-appearance:none;appearance:none;
+background-image:url(“data:image/svg+xml,%3Csvg xmlns=‘http://www.w3.org/2000/svg’ width=‘12’ height=‘8’ viewBox=‘0 0 12 8’%3E%3Cpath d=‘M1 1l5 5 5-5’ stroke=’%238a847c’ stroke-width=‘1.5’ fill=‘none’ stroke-linecap=‘round’/%3E%3C/svg%3E”);
+background-repeat:no-repeat;background-position:right 10px center;padding-right:28px;
 }
-.chip:active{background:var(--charcoal);color:#fff;border-color:var(--charcoal);}
-.chip-cat-label{font-size:0.58rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;color:var(--ink4);flex-shrink:0;padding:5px 2px;}
-.no-items-chip{font-size:0.72rem;color:var(--ink4);padding:5px 4px;font-style:italic;}
-
-/* 노트 툴바 */
-.note-toolbar{display:flex;gap:6px;align-items:center;flex-wrap:wrap;flex-shrink:0;}
-.note-title-input{
-  width:100%;padding:8px 10px;
-  font-size:0.9rem;font-weight:600;font-family:var(--serif);
-  border-radius:5px;margin-bottom:2px;
-}
+.insert-select:disabled{color:var(–ink4);background:var(–bg2);}
+.insert-btn{flex-shrink:0;padding:8px 14px;}
+.note-title-input{width:100%;padding:8px 10px;font-size:0.9rem;font-weight:600;font-family:var(–serif);border-radius:5px;}
 .note-toolbar-btns{display:flex;gap:6px;align-items:center;width:100%;}
-.autosave-badge{font-size:0.6rem;color:var(--ink4);white-space:nowrap;letter-spacing:0.05em;margin-left:auto;}
-
-/* 글쓰기 textarea — 모바일에서 최대한 크게 */
+.autosave-badge{font-size:0.6rem;color:var(–ink4);white-space:nowrap;letter-spacing:0.05em;margin-left:auto;}
 .note-textarea{
-  flex:1;min-height:200px;
-  padding:12px 14px;border:1px solid var(--line);border-radius:var(--r);
-  font-family:var(--serif);font-size:1rem;line-height:2;resize:none;
-  background:var(--bg);
-  background-image:repeating-linear-gradient(transparent,transparent 35px,rgba(0,0,0,0.06) 35px,rgba(0,0,0,0.06) 36px);
-  background-position:0 12px;color:var(--ink);
-  -webkit-overflow-scrolling:touch;
+flex:1;min-height:200px;
+padding:12px 14px;border:1px solid var(–line);border-radius:var(–r);
+font-family:var(–serif);font-size:1rem;line-height:2;resize:none;
+background:var(–bg);
+background-image:repeating-linear-gradient(transparent,transparent 35px,rgba(0,0,0,0.06) 35px,rgba(0,0,0,0.06) 36px);
+background-position:0 12px;color:var(–ink);-webkit-overflow-scrolling:touch;
 }
-.note-textarea:focus{border-color:var(--ink3);}
-.note-textarea::placeholder{color:var(--ink4);font-style:italic;}
-
-.ver-label{font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(--ink4);}
+.note-textarea:focus{border-color:var(–ink3);}
+.note-textarea::placeholder{color:var(–ink4);font-style:italic;}
+.ver-label{font-size:0.6rem;font-weight:700;letter-spacing:0.12em;text-transform:uppercase;color:var(–ink4);}
 .version-list{display:flex;flex-direction:column;gap:5px;}
-.version-card{background:var(--bg2);border:1px solid var(--line);border-radius:6px;padding:8px 10px;font-size:0.75rem;}
+.version-card{background:var(–bg2);border:1px solid var(–line);border-radius:6px;padding:8px 10px;font-size:0.75rem;}
 .version-header{display:flex;align-items:center;gap:5px;margin-bottom:3px;flex-wrap:wrap;}
-.version-label-txt{font-weight:700;color:var(--ink);font-size:0.72rem;}
+.version-label-txt{font-weight:700;color:var(–ink);font-size:0.72rem;}
 .vt{font-size:0.58rem;padding:1px 5px;border-radius:2px;font-weight:700;letter-spacing:0.07em;text-transform:uppercase;}
 .vt-auto{background:#e0ecd8;color:#2d5527;}
 .vt-manual{background:#dddaf0;color:#2a1a7a;}
-.version-title-txt{flex:1;color:var(--ink2);font-size:0.7rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
-.version-date{font-size:0.6rem;color:var(--ink4);}
-.version-preview{color:var(--ink3);font-size:0.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
+.version-title-txt{flex:1;color:var(–ink2);font-size:0.7rem;overflow:hidden;white-space:nowrap;text-overflow:ellipsis;}
+.version-date{font-size:0.6rem;color:var(–ink4);}
+.version-preview{color:var(–ink3);font-size:0.7rem;white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
 .version-btns{display:flex;gap:5px;margin-top:5px;}
 
-/* ── SPELL ── */
+/* SPELL */
 .spell-tabs{display:flex;gap:0;}
 .spell-tab{
-  flex:1;padding:8px 4px;border:1px solid var(--line);border-bottom:none;
-  background:var(--bg2);font-size:0.63rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
-  color:var(--ink3);cursor:pointer;margin-right:-1px;transition:all .18s;text-align:center;
+flex:1;padding:8px 4px;border:1px solid var(–line);border-bottom:none;
+background:var(–bg2);font-size:0.63rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;
+color:var(–ink3);cursor:pointer;margin-right:-1px;transition:all .18s;text-align:center;
 }
 .spell-tab:first-child{border-radius:4px 0 0 0;}
 .spell-tab:last-child{border-radius:0 4px 0 0;}
-.spell-tab.active{background:var(--paper);color:var(--ink);z-index:1;position:relative;}
-.spell-panel{display:none;flex-direction:column;gap:10px;background:var(--paper);border:1px solid var(--line);border-radius:0 4px 4px 4px;padding:12px;}
+.spell-tab.active{background:var(–paper);color:var(–ink);z-index:1;position:relative;}
+.spell-panel{display:none;flex-direction:column;gap:10px;background:var(–paper);border:1px solid var(–line);border-radius:0 4px 4px 4px;padding:12px;}
 .spell-panel.active{display:flex;}
-.spell-textarea{padding:10px 12px;font-size:0.9rem;line-height:1.8;resize:none;min-height:120px;width:100%;border-radius:var(--r);}
+.spell-textarea{padding:10px 12px;font-size:0.9rem;line-height:1.8;resize:none;min-height:120px;width:100%;border-radius:var(–r);}
 .spell-links{display:flex;gap:6px;flex-wrap:wrap;}
-.spell-info{font-size:0.7rem;color:var(--ink3);background:var(--bg);padding:8px 10px;border-radius:5px;line-height:1.65;border:1px solid var(--line);}
-.ai-result{background:var(--bg);border:1px solid var(--line);border-radius:var(--r);padding:12px;font-family:var(--serif);font-size:0.88rem;line-height:1.85;white-space:pre-wrap;min-height:80px;}
+.spell-info{font-size:0.7rem;color:var(–ink3);background:var(–bg);padding:8px 10px;border-radius:5px;line-height:1.65;border:1px solid var(–line);}
 
-/* ── ARCHIVE ── */
+/* ARCHIVE */
 .archive-nav{display:flex;align-items:center;gap:10px;margin-bottom:12px;}
-.archive-month-label{font-size:0.78rem;font-weight:700;letter-spacing:0.1em;color:var(--ink);}
+.archive-month-label{font-size:0.78rem;font-weight:700;letter-spacing:0.1em;color:var(–ink);}
 .tl-day-block{display:flex;gap:14px;padding-bottom:16px;}
 .tl-day-left{width:38px;flex-shrink:0;display:flex;flex-direction:column;align-items:center;padding-top:2px;}
-.tl-day-num{font-family:var(--serif);font-size:1.25rem;font-weight:400;color:var(--ink);line-height:1;}
-.tl-day-wd{font-size:0.56rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink4);margin-top:2px;}
-.tl-day-stem{width:1px;flex:1;background:var(--line);margin-top:5px;}
+.tl-day-num{font-family:var(–serif);font-size:1.25rem;font-weight:400;color:var(–ink);line-height:1;}
+.tl-day-wd{font-size:0.56rem;font-weight:600;letter-spacing:0.08em;text-transform:uppercase;color:var(–ink4);margin-top:2px;}
+.tl-day-stem{width:1px;flex:1;background:var(–line);margin-top:5px;}
 .tl-day-right{flex:1;display:flex;flex-direction:column;gap:6px;padding-top:2px;}
-.tl-entry{background:var(--bg);border:1px solid var(--line);border-radius:6px;padding:8px 10px;}
+.tl-entry{background:var(–bg);border:1px solid var(–line);border-radius:6px;padding:8px 10px;}
 .tl-entry-top{display:flex;align-items:center;gap:6px;margin-bottom:3px;flex-wrap:wrap;}
-.tl-entry-type{font-size:0.6rem;font-weight:700;letter-spacing:0.08em;text-transform:uppercase;color:var(--ink3);}
-.tl-entry-time{font-size:0.6rem;color:var(--ink4);margin-left:auto;}
-.tl-entry-text{font-family:var(--serif);font-size:0.85rem;line-height:1.65;color:var(--ink2);white-space:pre-wrap;}
-.tl-empty{text-align:center;color:var(--ink4);font-size:0.78rem;padding:32px;letter-spacing:0.05em;}
+.tl-entry-time{font-size:0.6rem;color:var(–ink4);margin-left:auto;}
+.tl-entry-text{font-family:var(–serif);font-size:0.85rem;line-height:1.65;color:var(–ink2);white-space:pre-wrap;}
+.tl-empty{text-align:center;color:var(–ink4);font-size:0.78rem;padding:32px;letter-spacing:0.05em;}
 
-/* ── MODAL ── */
+/* MODAL */
 .modal-overlay{display:none;position:fixed;inset:0;background:rgba(28,26,24,0.55);backdrop-filter:blur(4px);z-index:200;align-items:flex-end;justify-content:center;}
 .modal-overlay.open{display:flex;}
-.modal{
-  background:var(--paper);border-radius:16px 16px 0 0;
-  padding:20px 20px 32px;width:100%;max-width:600px;
-  display:flex;flex-direction:column;gap:12px;
-  max-height:80vh;overflow-y:auto;
-}
-.modal h2{font-family:var(--sans);font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
-.modal p{font-size:0.75rem;color:var(--ink3);line-height:1.6;}
+.modal{background:var(–paper);border-radius:16px 16px 0 0;padding:20px 20px 32px;width:100%;max-width:600px;display:flex;flex-direction:column;gap:12px;max-height:80vh;overflow-y:auto;}
+.modal h2{font-family:var(–sans);font-size:0.82rem;font-weight:700;letter-spacing:0.1em;text-transform:uppercase;}
+.modal p{font-size:0.75rem;color:var(–ink3);line-height:1.6;}
 .modal-btns{display:flex;gap:6px;flex-wrap:wrap;}
 .modal textarea{width:100%;height:100px;font-size:0.72rem;padding:8px 10px;resize:none;font-family:monospace;border-radius:5px;}
-
 ::-webkit-scrollbar{width:3px;}
 ::-webkit-scrollbar-track{background:transparent;}
-::-webkit-scrollbar-thumb{background:var(--line);border-radius:10px;}
+::-webkit-scrollbar-thumb{background:var(–line);border-radius:10px;}
 </style>
+
 </head>
 <body>
 
 <!-- SPLASH -->
+
 <div id="splash" onclick="enterApp()">
   <div class="splash-logo">글짓기</div>
   <svg viewBox="0 0 320 100" xmlns="http://www.w3.org/2000/svg" style="width:min(320px,85vw);height:auto;margin-top:56px;">
@@ -282,8 +246,8 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
 </div>
 
 <!-- APP -->
-<div id="app">
 
+<div id="app">
   <div class="app-header">
     <span class="app-logo">글짓기</span>
     <span class="app-wordmark">글감 바구니</span>
@@ -291,7 +255,8 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
       <button id="basket-home-btn" onclick="goSplash()" title="첫 화면으로"
         style="background:none;border:none;padding:0;cursor:pointer;font-size:1.2rem;line-height:1;filter:grayscale(1) opacity(0.5);display:flex;align-items:center;gap:3px;-webkit-tap-highlight-color:transparent;"
         onmouseover="this.style.filter='grayscale(1) opacity(0.85)'"
-        onmouseout="this.style.filter='grayscale(1) opacity(0.5)'">🧺<span id="home-badge" style="display:none;min-width:14px;height:14px;background:#2c2a26;color:#fff;font-size:0.52rem;font-weight:700;border-radius:7px;align-items:center;justify-content:center;padding:0 3px;line-height:1;font-family:var(--sans);"></span>
+        onmouseout="this.style.filter='grayscale(1) opacity(0.5)'">🧺<span id="home-badge"
+        style="display:none;min-width:14px;height:14px;background:#2c2a26;color:#fff;font-size:0.52rem;font-weight:700;border-radius:7px;align-items:center;justify-content:center;padding:0 3px;line-height:1;font-family:sans-serif;"></span>
       </button>
       <button class="btn btn-sm" onclick="openBackup()">↑ 백업</button>
       <button class="btn btn-sm" onclick="openRestore()">↓ 복구</button>
@@ -307,119 +272,126 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
 
   <div class="tab-content">
 
-    <!-- ① BASKET -->
-    <div id="tab-basket" class="tab-panel active">
-      <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
-        <div class="cat-filter">
-          <button class="cat-btn sel" data-cat="all" onclick="filterCat(this)">All</button>
-          <button class="cat-btn" data-cat="인물" onclick="filterCat(this)">인물</button>
-          <button class="cat-btn" data-cat="장소" onclick="filterCat(this)">장소</button>
-          <button class="cat-btn" data-cat="단어" onclick="filterCat(this)">단어</button>
-          <button class="cat-btn" data-cat="기타" onclick="filterCat(this)">기타</button>
-        </div>
-        <span id="basket-count" style="margin-left:auto;font-size:0.62rem;color:var(--ink4);letter-spacing:0.06em;"></span>
-      </div>
-      <div class="add-form">
-        <div class="add-form-row">
-          <select id="new-cat" style="font-size:0.82rem;padding:7px 8px;">
-            <option value="인물">인물</option>
-            <option value="장소">장소</option>
-            <option value="단어" selected>단어·표현</option>
-            <option value="기타">기타</option>
-          </select>
-          <button class="btn btn-dark" onclick="addItem()" style="flex-shrink:0;">추가</button>
-        </div>
-        <textarea id="new-content" placeholder="새 글감을 입력하세요…"
-          onkeydown="if((e=event).key==='Enter'&&(e.ctrlKey||e.metaKey))addItem()"></textarea>
-      </div>
-      <div class="items-list" id="items-list"></div>
+```
+<!-- BASKET -->
+<div id="tab-basket" class="tab-panel active">
+  <div style="display:flex;gap:8px;align-items:center;flex-wrap:wrap;">
+    <div class="cat-filter">
+      <button class="cat-btn sel" data-cat="all" onclick="filterCat(this)">All</button>
+      <button class="cat-btn" data-cat="인물" onclick="filterCat(this)">인물</button>
+      <button class="cat-btn" data-cat="장소" onclick="filterCat(this)">장소</button>
+      <button class="cat-btn" data-cat="단어" onclick="filterCat(this)">단어</button>
+      <button class="cat-btn" data-cat="기타" onclick="filterCat(this)">기타</button>
     </div>
+    <span id="basket-count" style="margin-left:auto;font-size:0.62rem;color:var(--ink4);letter-spacing:0.06em;"></span>
+  </div>
+  <div class="add-form">
+    <div class="add-form-row">
+      <select id="new-cat" style="font-size:0.82rem;padding:7px 8px;">
+        <option value="인물">인물</option>
+        <option value="장소">장소</option>
+        <option value="단어" selected>단어·표현</option>
+        <option value="기타">기타</option>
+      </select>
+      <button class="btn btn-dark" onclick="addItem()" style="flex-shrink:0;">추가</button>
+    </div>
+    <textarea id="new-content" placeholder="새 글감을 입력하세요…"
+      onkeydown="if((e=event).key==='Enter'&&(e.ctrlKey||e.metaKey))addItem()"></textarea>
+  </div>
+  <div class="items-list" id="items-list"></div>
+</div>
 
-    <!-- ② NOTE -->
-    <div id="tab-note" class="tab-panel">
-      <div class="note-wrapper">
-        <!-- 글감 칩 -->
-        <div class="sidebar-chips-wrap">
-          <div class="sidebar-chips-label">글감 삽입 <span style="font-weight:400;letter-spacing:0;text-transform:none;color:var(--ink4);font-size:0.58rem;">— 탭하면 글쓰기 칸에 바로 추가돼요</span></div>
-          <div class="sidebar-chips" id="sidebar-chips"></div>
-        </div>
-        <!-- 제목 -->
-        <input type="text" class="note-title-input" id="note-title" placeholder="제목…">
-        <!-- 툴바 -->
-        <div class="note-toolbar-btns">
-          <button class="btn btn-dark btn-sm" onclick="saveVersion('manual')">Save</button>
-          <button class="btn btn-sm" onclick="copyNote()">Copy</button>
-          <button class="btn btn-sm" onclick="clearNote()">Clear</button>
-          <span class="autosave-badge" id="autosave-badge">—</span>
-        </div>
-        <!-- 글쓰기 영역 -->
-        <textarea class="note-textarea" id="note-area" placeholder="여기에 글을 써주세요…"></textarea>
-        <!-- 버전 -->
-        <div>
-          <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
-            <span class="ver-label">Version History</span>
-            <span style="font-size:0.6rem;color:var(--ink4);">자동 3분 · 수동 무제한</span>
-          </div>
-          <div class="version-list" id="version-list"></div>
-        </div>
+<!-- NOTE -->
+<div id="tab-note" class="tab-panel">
+  <div class="note-wrapper">
+    <div class="insert-wrap">
+      <div class="insert-label">글감 삽입</div>
+      <div class="insert-row">
+        <select id="insert-cat" class="insert-select" onchange="updateInsertItems()">
+          <option value="">카테고리 선택</option>
+          <option value="인물">인물</option>
+          <option value="장소">장소</option>
+          <option value="단어">단어·표현</option>
+          <option value="기타">기타</option>
+        </select>
+        <select id="insert-item" class="insert-select" disabled>
+          <option value="">글감 선택</option>
+        </select>
+        <button class="btn btn-dark insert-btn" onclick="doInsertNote()">삽입</button>
       </div>
     </div>
-
-    <!-- ③ SPELL -->
-    <div id="tab-spell" class="tab-panel">
-      <div class="spell-tabs">
-        <button class="spell-tab active" onclick="switchSpellTab('link',this)">External</button>
-        <button class="spell-tab" onclick="switchSpellTab('copy',this)">Copy</button>
-        <button class="spell-tab" onclick="switchSpellTab('ai',this)">AI 교정</button>
-      </div>
-      <div id="spell-link" class="spell-panel active">
-        <p style="font-size:0.78rem;color:var(--ink3);">① 아래 글을 입력 → ② 복사 버튼 → ③ 검사기 사이트에서 붙여넣기</p>
-        <textarea class="spell-textarea" id="spell-ext-area" placeholder="검사할 글을 붙여넣거나 입력하세요…"></textarea>
-        <button class="btn btn-dark" onclick="copySpellText()" style="width:100%;">① 글 복사하기</button>
-        <div class="spell-links">
-          <button class="btn" onclick="openSpell('saramin')">② 사람인 맞춤법 검사기 →</button>
-          <button class="btn" onclick="openSpell('naver')">② 네이버 맞춤법 검사기 →</button>
-        </div>
-        <div class="spell-info">먼저 <strong>글 복사하기</strong>를 누른 후 검사기 사이트가 열리면 입력창에 <strong>길게 눌러 붙여넣기</strong> 하세요.</div>
-      </div>
-      <div id="spell-copy" class="spell-panel">
-        <p style="font-size:0.78rem;color:var(--ink3);">글을 붙여넣고 복사해서 원하는 곳에 사용하세요.</p>
-        <textarea class="spell-textarea" id="spell-copy-area" placeholder="여기에 글을 붙여넣거나 입력하세요…"></textarea>
-        <div class="spell-links">
-          <button class="btn btn-dark" onclick="copyText('spell-copy-area')">전체 복사</button>
-          <button class="btn" onclick="importNote('spell-copy-area')">노트에서 가져오기</button>
-          <button class="btn" onclick="el('spell-copy-area').value=''">지우기</button>
-        </div>
-      </div>
-      <div id="spell-ai" class="spell-panel">
-        <p style="font-size:0.78rem;color:var(--ink3);">GitHub Pages에서는 AI 직접 교정이 불가해요.<br>아래에서 글을 복사한 후 Claude에 붙여넣어 교정받으세요.</p>
-        <textarea class="spell-textarea" id="spell-ai-area" placeholder="교정할 글을 입력하거나 붙여넣으세요…"></textarea>
-        <div class="spell-links">
-          <button class="btn btn-dark" onclick="copyForClaude()">글 복사 + Claude 열기</button>
-          <button class="btn" onclick="importNote('spell-ai-area')">노트에서 가져오기</button>
-        </div>
-        <div class="spell-info">
-          <strong>방법:</strong> 복사 버튼 → Claude.ai 열림 → 새 대화에서 붙여넣기 후<br>
-          <em>"맞춤법과 띄어쓰기를 교정해줘"</em> 라고 입력하세요.
-        </div>
-      </div>
+    <input type="text" class="note-title-input" id="note-title" placeholder="제목…">
+    <div class="note-toolbar-btns">
+      <button class="btn btn-dark btn-sm" onclick="saveVersion('manual')">Save</button>
+      <button class="btn btn-sm" onclick="copyNote()">Copy</button>
+      <button class="btn btn-sm" onclick="clearNote()">Clear</button>
+      <span class="autosave-badge" id="autosave-badge">—</span>
     </div>
-
-    <!-- ④ ARCHIVE -->
-    <div id="tab-archive" class="tab-panel">
-      <div class="archive-nav">
-        <button class="btn btn-sm" onclick="changeArchiveMonth(-1)">←</button>
-        <span class="archive-month-label" id="archive-month-label"></span>
-        <button class="btn btn-sm" onclick="changeArchiveMonth(1)">→</button>
-        <span style="margin-left:auto;font-size:0.62rem;color:var(--ink4);" id="archive-count"></span>
+    <textarea class="note-textarea" id="note-area" placeholder="여기에 글을 써주세요…"></textarea>
+    <div>
+      <div style="display:flex;align-items:center;gap:8px;margin-bottom:6px;">
+        <span class="ver-label">Version History</span>
+        <span style="font-size:0.6rem;color:var(--ink4);">자동 3분 · 수동 무제한</span>
       </div>
-      <div id="tl-scroll"></div>
+      <div class="version-list" id="version-list"></div>
     </div>
+  </div>
+</div>
 
-  </div><!-- /tab-content -->
-</div><!-- /app -->
+<!-- SPELL -->
+<div id="tab-spell" class="tab-panel">
+  <div class="spell-tabs">
+    <button class="spell-tab active" onclick="switchSpellTab('link',this)">External</button>
+    <button class="spell-tab" onclick="switchSpellTab('copy',this)">Copy</button>
+    <button class="spell-tab" onclick="switchSpellTab('ai',this)">AI 교정</button>
+  </div>
+  <div id="spell-link" class="spell-panel active">
+    <p style="font-size:0.78rem;color:var(--ink3);">① 글 입력 → ② 복사 → ③ 검사기에서 붙여넣기</p>
+    <textarea class="spell-textarea" id="spell-ext-area" placeholder="검사할 글을 붙여넣거나 입력하세요…"></textarea>
+    <button class="btn btn-dark" onclick="copySpellText()" style="width:100%;">① 글 복사하기</button>
+    <div class="spell-links">
+      <button class="btn" onclick="openSpell('saramin')">② 사람인 맞춤법 →</button>
+      <button class="btn" onclick="openSpell('naver')">② 네이버 맞춤법 →</button>
+    </div>
+    <div class="spell-info">먼저 <strong>글 복사하기</strong> → 검사기 사이트에서 <strong>길게 눌러 붙여넣기</strong></div>
+  </div>
+  <div id="spell-copy" class="spell-panel">
+    <p style="font-size:0.78rem;color:var(--ink3);">글을 붙여넣고 복사해서 원하는 곳에 사용하세요.</p>
+    <textarea class="spell-textarea" id="spell-copy-area" placeholder="여기에 글을 붙여넣거나 입력하세요…"></textarea>
+    <div class="spell-links">
+      <button class="btn btn-dark" onclick="copyText('spell-copy-area')">전체 복사</button>
+      <button class="btn" onclick="importNote('spell-copy-area')">노트에서 가져오기</button>
+      <button class="btn" onclick="el('spell-copy-area').value=''">지우기</button>
+    </div>
+  </div>
+  <div id="spell-ai" class="spell-panel">
+    <p style="font-size:0.78rem;color:var(--ink3);">글을 복사한 후 Claude에 붙여넣어 교정받으세요.</p>
+    <textarea class="spell-textarea" id="spell-ai-area" placeholder="교정할 글을 입력하거나 붙여넣으세요…"></textarea>
+    <div class="spell-links">
+      <button class="btn btn-dark" onclick="copyForClaude()">글 복사 + Claude 열기</button>
+      <button class="btn" onclick="importNote('spell-ai-area')">노트에서 가져오기</button>
+    </div>
+    <div class="spell-info"><strong>방법:</strong> 복사 버튼 → Claude.ai 열림 → 붙여넣기 후 "맞춤법 교정해줘" 입력</div>
+  </div>
+</div>
+
+<!-- ARCHIVE -->
+<div id="tab-archive" class="tab-panel">
+  <div class="archive-nav">
+    <button class="btn btn-sm" onclick="changeArchiveMonth(-1)">←</button>
+    <span class="archive-month-label" id="archive-month-label"></span>
+    <button class="btn btn-sm" onclick="changeArchiveMonth(1)">→</button>
+    <span style="margin-left:auto;font-size:0.62rem;color:var(--ink4);" id="archive-count"></span>
+  </div>
+  <div id="tl-scroll"></div>
+</div>
+```
+
+  </div>
+</div>
 
 <!-- MODAL -->
+
 <div class="modal-overlay" id="modal-overlay" onclick="if(event.target===this)closeModal()">
   <div class="modal">
     <h2 id="modal-title"></h2>
@@ -430,47 +402,55 @@ input:focus,textarea:focus,select:focus{outline:none;border-color:var(--ink3);}
 </div>
 
 <script>
-const WD=['SUN','MON','TUE','WED','THU','FRI','SAT'];
-let S={items:[],note:{title:'',body:''},versions:[],filterCat:'all'};
-let autoTimer=null, lastAuto='';
-let archY=new Date().getFullYear(), archM=new Date().getMonth();
+const WD = ['SUN','MON','TUE','WED','THU','FRI','SAT'];
+let S = { items:[], note:{title:'',body:''}, versions:[], filterCat:'all' };
+let autoTimer = null, lastAuto = '';
+let archY = new Date().getFullYear(), archM = new Date().getMonth();
 
-function el(id){return document.getElementById(id);}
-function load(){try{const s=localStorage.getItem('glgam_v5');if(s)S={...S,...JSON.parse(s)};}catch(e){}}
-function persist(){S.note.title=el('note-title').value;S.note.body=el('note-area').value;localStorage.setItem('glgam_v5',JSON.stringify(S));}
+function el(id){ return document.getElementById(id); }
+
+function load(){
+  try{ const s=localStorage.getItem('glgam_v5'); if(s) S={...S,...JSON.parse(s)}; }catch(e){}
+}
+function persist(){
+  S.note.title = el('note-title').value;
+  S.note.body  = el('note-area').value;
+  localStorage.setItem('glgam_v5', JSON.stringify(S));
+}
 
 /* SPLASH */
 function drawPapers(){
-  const n=Math.min(S.items.length,10);
-  const g=el('papers'); g.innerHTML='';
-  const ns='http://www.w3.org/2000/svg';
-  const slots=[
+  const n = Math.min(S.items.length, 10);
+  const g = el('papers'); g.innerHTML = '';
+  const ns = 'http://www.w3.org/2000/svg';
+  const slots = [
     {x:147,y:0,r:5},{x:124,y:-4,r:-10},{x:170,y:-3,r:12},
     {x:135,y:-15,r:-4},{x:158,y:-17,r:8},{x:114,y:-13,r:-16},
     {x:178,y:-15,r:17},{x:126,y:-27,r:-7},{x:152,y:-29,r:5},{x:140,y:-39,r:1}
   ];
-  const fills=['#edeadf','#e8e4d8','#f0ece1','#e4e0d5','#eae6db'];
-  for(let i=0;i<n;i++){
-    const s=slots[i],f=fills[i%fills.length],cx=s.x+15,cy=s.y+19;
-    const paper=document.createElementNS(ns,'rect');
-    paper.setAttribute('x',s.x);paper.setAttribute('y',s.y);
-    paper.setAttribute('width','30');paper.setAttribute('height','38');
-    paper.setAttribute('rx','1.5');paper.setAttribute('fill',f);
-    paper.setAttribute('stroke','#b8b0a4');paper.setAttribute('stroke-width','0.6');
+  const fills = ['#edeadf','#e8e4d8','#f0ece1','#e4e0d5','#eae6db'];
+  for(let i=0; i<n; i++){
+    const s=slots[i], f=fills[i%fills.length], cx=s.x+15, cy=s.y+19;
+    const paper = document.createElementNS(ns,'rect');
+    paper.setAttribute('x',s.x); paper.setAttribute('y',s.y);
+    paper.setAttribute('width','30'); paper.setAttribute('height','38');
+    paper.setAttribute('rx','1.5'); paper.setAttribute('fill',f);
+    paper.setAttribute('stroke','#b8b0a4'); paper.setAttribute('stroke-width','0.6');
     paper.setAttribute('stroke-dasharray','2,0.4,1.5,0.5');
     paper.setAttribute('transform',`rotate(${s.r},${cx},${cy})`);
-    const mkLine=yo=>{
-      const l=document.createElementNS(ns,'line');
-      l.setAttribute('x1',s.x+5);l.setAttribute('y1',s.y+yo);
-      l.setAttribute('x2',s.x+25);l.setAttribute('y2',s.y+yo);
-      l.setAttribute('stroke','#cdc6bc');l.setAttribute('stroke-width','0.5');
+    const mkLine = yo => {
+      const l = document.createElementNS(ns,'line');
+      l.setAttribute('x1',s.x+5); l.setAttribute('y1',s.y+yo);
+      l.setAttribute('x2',s.x+25); l.setAttribute('y2',s.y+yo);
+      l.setAttribute('stroke','#cdc6bc'); l.setAttribute('stroke-width','0.5');
       l.setAttribute('stroke-dasharray','1.5,0.5');
       l.setAttribute('transform',`rotate(${s.r},${cx},${cy})`);
       return l;
     };
-    g.appendChild(paper);g.appendChild(mkLine(12));g.appendChild(mkLine(19));g.appendChild(mkLine(26));
+    g.appendChild(paper);
+    g.appendChild(mkLine(12)); g.appendChild(mkLine(19)); g.appendChild(mkLine(26));
   }
-  el('splash-count').textContent=n===0?'drop your first word.':n+' fragment'+(n===1?'':'s')+' collected.';
+  el('splash-count').textContent = n===0 ? 'drop your first word.' : n+' fragment'+(n===1?'':'s')+' collected.';
 }
 
 function enterApp(){
@@ -480,71 +460,76 @@ function enterApp(){
     el('splash').classList.remove('fade');
     el('app').style.display='flex';
     el('app').classList.add('show');
-  },480);
+  }, 480);
 }
 
 function goSplash(){
   drawPapers();
   el('app').classList.remove('show');
   el('app').style.display='none';
-  const sp=el('splash');
-  sp.style.display='flex';sp.style.opacity='0';sp.classList.remove('fade');
+  const sp = el('splash');
+  sp.style.display='flex'; sp.style.opacity='0'; sp.classList.remove('fade');
   requestAnimationFrame(()=>requestAnimationFrame(()=>{
-    sp.style.transition='opacity .4s ease';sp.style.opacity='1';
+    sp.style.transition='opacity .4s ease'; sp.style.opacity='1';
   }));
-  setTimeout(()=>{sp.style.transition='';},450);
+  setTimeout(()=>{ sp.style.transition=''; }, 450);
 }
 
 /* 탭 */
-function switchTab(tab,btn){
+function switchTab(tab, btn){
   document.querySelectorAll('.tab-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.tab-btn').forEach(b=>b.classList.remove('active'));
-  el('tab-'+tab).classList.add('active');btn.classList.add('active');
-  if(tab==='note')renderChips();
-  if(tab==='archive')renderArchive();
+  el('tab-'+tab).classList.add('active'); btn.classList.add('active');
+  if(tab==='archive') renderArchive();
   persist();
 }
 
 /* BASKET */
 function filterCat(btn){
-  S.filterCat=btn.dataset.cat;
-  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('sel',b===btn));
+  S.filterCat = btn.dataset.cat;
+  document.querySelectorAll('.cat-btn').forEach(b=>b.classList.toggle('sel', b===btn));
   renderItems();
 }
+
 function addItem(){
-  const cat=el('new-cat').value,content=el('new-content').value.trim();
-  if(!content)return;
-  S.items.unshift({id:Date.now(),cat,content,date:fmt(new Date()),dateKey:dkey(new Date())});
-  el('new-content').value='';
-  persist();renderItems();renderChips();drawPapers();updateHomeBadge();
+  const cat = el('new-cat').value;
+  const content = el('new-content').value.trim();
+  if(!content) return;
+  S.items.unshift({ id:Date.now(), cat, content, date:fmt(new Date()), dateKey:dkey(new Date()) });
+  el('new-content').value = '';
+  persist(); renderItems(); drawPapers(); updateHomeBadge();
 }
+
 function deleteItem(id){
-  if(!confirm('이 글감을 삭제할까요?'))return;
-  S.items=S.items.filter(i=>i.id!==id);
-  persist();renderItems();renderChips();drawPapers();updateHomeBadge();
+  if(!confirm('이 글감을 삭제할까요?')) return;
+  S.items = S.items.filter(i=>i.id!==id);
+  persist(); renderItems(); drawPapers(); updateHomeBadge();
 }
+
 function startEdit(id){
-  const card=el('item-'+id),item=S.items.find(i=>i.id===id);
+  const card = el('item-'+id), item = S.items.find(i=>i.id===id);
   card.querySelector('.item-body').style.display='none';
   card.querySelector('.item-actions').style.display='none';
-  const ta=document.createElement('textarea');
-  ta.className='item-edit-area';ta.value=item.content;ta.rows=3;
-  const row=document.createElement('div');row.style.cssText='display:flex;gap:6px;margin-top:5px;';
-  const sv=document.createElement('button');sv.className='btn btn-dark btn-sm';sv.textContent='저장';
-  sv.onclick=()=>{item.content=ta.value.trim()||item.content;persist();renderItems();renderChips();};
-  const cn=document.createElement('button');cn.className='btn btn-sm';cn.textContent='취소';
-  cn.onclick=renderItems;
-  row.append(sv,cn);card.append(ta,row);
+  const ta = document.createElement('textarea');
+  ta.className='item-edit-area'; ta.value=item.content; ta.rows=3;
+  const row = document.createElement('div');
+  row.style.cssText='display:flex;gap:6px;margin-top:5px;';
+  const sv = document.createElement('button'); sv.className='btn btn-dark btn-sm'; sv.textContent='저장';
+  sv.onclick = ()=>{ item.content=ta.value.trim()||item.content; persist(); renderItems(); };
+  const cn = document.createElement('button'); cn.className='btn btn-sm'; cn.textContent='취소';
+  cn.onclick = renderItems;
+  row.append(sv,cn); card.append(ta,row);
 }
+
 function renderItems(){
-  const list=el('items-list');
-  const data=S.filterCat==='all'?S.items:S.items.filter(i=>i.cat===S.filterCat);
-  el('basket-count').textContent=data.length+' items';
+  const list = el('items-list');
+  const data = S.filterCat==='all' ? S.items : S.items.filter(i=>i.cat===S.filterCat);
+  el('basket-count').textContent = data.length+' items';
   if(!data.length){
     list.innerHTML='<div class="empty-msg">Start collecting.<br><span style="font-size:0.72rem;">words · places · characters · phrases</span></div>';
     return;
   }
-  list.innerHTML=data.map(item=>`
+  list.innerHTML = data.map(item=>`
     <div class="item-card" id="item-${item.id}">
       <div class="item-header">
         <span class="tag tag-${item.cat}">${item.cat}</span>
@@ -558,62 +543,71 @@ function renderItems(){
     </div>`).join('');
 }
 
-/* 글감 칩 (Note 탭 상단 가로스크롤) */
-function renderChips(){
-  const chips=el('sidebar-chips');
-  const cats=['인물','장소','단어','기타'];
-  let html='';
-  let hasAny=false;
-  cats.forEach((cat,ci)=>{
-    const items=S.items.filter(i=>i.cat===cat);
-    if(!items.length)return;
-    if(hasAny)html+=`<div class="sidebar-chip-divider"></div>`;
-    html+=`<span class="chip-cat-label">${cat}</span>`;
-    items.forEach(item=>{
-      const p=item.content.length>12?item.content.slice(0,12)+'…':item.content;
-      html+=`<button class="chip" onclick="insertNote(${JSON.stringify(item.content)})" title="${escA(item.content)}">${esc(p)}</button>`;
-    });
-    hasAny=true;
+/* NOTE — 글감 드롭다운 */
+function updateInsertItems(){
+  const cat = el('insert-cat').value;
+  const itemSel = el('insert-item');
+  itemSel.innerHTML = '<option value="">글감 선택</option>';
+  if(!cat){ itemSel.disabled=true; return; }
+  const items = S.items.filter(i=>i.cat===cat);
+  if(!items.length){
+    itemSel.innerHTML='<option value="">해당 글감 없음</option>';
+    itemSel.disabled=true; return;
+  }
+  items.forEach(item=>{
+    const opt = document.createElement('option');
+    opt.value = item.id;
+    opt.textContent = item.content.length>30 ? item.content.slice(0,30)+'…' : item.content;
+    itemSel.appendChild(opt);
   });
-  if(!html)html='<span class="no-items-chip">글감 없음 — 바로 써도 돼요 ✍️</span>';
-  chips.innerHTML=html;
+  itemSel.disabled = false;
 }
 
-function insertNote(text){
-  const ta=el('note-area');
+function doInsertNote(){
+  const itemId = el('insert-item').value;
+  if(!itemId){ alert('글감을 선택해주세요.'); return; }
+  const item = S.items.find(i=>i.id===Number(itemId));
+  if(!item) return;
+  const ta = el('note-area');
   ta.focus();
-  const s=ta.selectionStart,e2=ta.selectionEnd;
-  const before=ta.value.slice(0,s),after=ta.value.slice(e2);
-  const ins=(before.length&&!before.endsWith('\n')&&!before.endsWith(' ')?' ':'')+text;
-  ta.value=before+ins+after;
-  ta.selectionStart=ta.selectionEnd=s+ins.length;
-  // iOS에서 커서 위치 갱신 트리거
+  const s=ta.selectionStart, e2=ta.selectionEnd;
+  const before=ta.value.slice(0,s), after=ta.value.slice(e2);
+  const ins=(before.length&&!before.endsWith('\n')&&!before.endsWith(' ')?' ':'')+item.content;
+  ta.value = before+ins+after;
+  ta.selectionStart = ta.selectionEnd = s+ins.length;
   ta.dispatchEvent(new Event('input',{bubbles:true}));
   persist();
 }
 
 /* VERSIONS */
 function saveVersion(type){
-  const title=el('note-title').value.trim(),body=el('note-area').value.trim();
-  if(!body){if(type==='manual')alert('내용이 없어요.');return;}
-  const n=S.versions.length+1;
-  S.versions.unshift({label:'v'+n,type,date:fmt(new Date()),dateKey:dkey(new Date()),title:title||'(제목 없음)',body});
-  persist();renderVersions();
-  if(type==='manual'){badge('Saved ✓','#4a8a4a');setTimeout(()=>badge('—','var(--ink4)'),2200);}
+  const title = el('note-title').value.trim();
+  const body  = el('note-area').value.trim();
+  if(!body){ if(type==='manual') alert('내용이 없어요.'); return; }
+  const n = S.versions.length+1;
+  S.versions.unshift({ label:'v'+n, type, date:fmt(new Date()), dateKey:dkey(new Date()), title:title||'(제목 없음)', body });
+  persist(); renderVersions();
+  if(type==='manual'){ badge('Saved ✓','#4a8a4a'); setTimeout(()=>badge('—','var(--ink4)'),2200); }
 }
+
 function restoreVersion(i){
-  const v=S.versions[i];
-  if(!confirm(`[${v.label}] 불러올까요?`))return;
-  el('note-title').value=v.title;el('note-area').value=v.body;persist();
+  const v = S.versions[i];
+  if(!confirm(`[${v.label}] 불러올까요?`)) return;
+  el('note-title').value=v.title; el('note-area').value=v.body; persist();
 }
+
 function deleteVersion(i){
-  if(!confirm('삭제할까요?'))return;
-  S.versions.splice(i,1);persist();renderVersions();
+  if(!confirm('삭제할까요?')) return;
+  S.versions.splice(i,1); persist(); renderVersions();
 }
+
 function renderVersions(){
-  const list=el('version-list');
-  if(!S.versions.length){list.innerHTML='<div style="font-size:0.68rem;color:var(--ink4);padding:2px;font-style:italic;">저장된 버전이 없습니다</div>';return;}
-  list.innerHTML=S.versions.map((v,i)=>`
+  const list = el('version-list');
+  if(!S.versions.length){
+    list.innerHTML='<div style="font-size:0.68rem;color:var(--ink4);padding:2px;font-style:italic;">저장된 버전이 없습니다</div>';
+    return;
+  }
+  list.innerHTML = S.versions.map((v,i)=>`
     <div class="version-card">
       <div class="version-header">
         <span class="version-label-txt">${v.label}</span>
@@ -628,71 +622,62 @@ function renderVersions(){
       </div>
     </div>`).join('');
 }
+
 function startAutoSave(){
-  if(autoTimer)clearInterval(autoTimer);
-  autoTimer=setInterval(()=>{const b=el('note-area').value.trim();if(b&&b!==lastAuto){saveVersion('auto');lastAuto=b;}},180000);
+  if(autoTimer) clearInterval(autoTimer);
+  autoTimer = setInterval(()=>{
+    const b = el('note-area').value.trim();
+    if(b && b!==lastAuto){ saveVersion('auto'); lastAuto=b; }
+  }, 180000);
 }
-function badge(t,c){const b=el('autosave-badge');b.textContent=t;b.style.color=c;}
-function copyNote(){const t=el('note-area').value;if(!t)return;navigator.clipboard.writeText(t).then(()=>alert('복사되었어요!'));}
-function clearNote(){if(!confirm('초기화할까요?'))return;el('note-area').value='';el('note-title').value='';persist();}
+
+function badge(t,c){ const b=el('autosave-badge'); b.textContent=t; b.style.color=c; }
+function copyNote(){ const t=el('note-area').value; if(!t)return; navigator.clipboard.writeText(t).then(()=>alert('복사되었어요!')); }
+function clearNote(){ if(!confirm('초기화할까요?'))return; el('note-area').value=''; el('note-title').value=''; persist(); }
 
 /* SPELL */
 function switchSpellTab(tab,btn){
   document.querySelectorAll('.spell-panel').forEach(p=>p.classList.remove('active'));
   document.querySelectorAll('.spell-tab').forEach(b=>b.classList.remove('active'));
-  el('spell-'+tab).classList.add('active');btn.classList.add('active');
+  el('spell-'+tab).classList.add('active'); btn.classList.add('active');
 }
+
 function copySpellText(){
-  const text=el('spell-ext-area').value.trim();
-  if(!text){alert('검사할 글을 먼저 입력해주세요.');return;}
-  navigator.clipboard.writeText(text).then(()=>alert('복사 완료! 이제 검사기 버튼을 눌러주세요.')).catch(()=>{
-    // clipboard 실패 시 선택 방식으로 대체
-    el('spell-ext-area').select();
-    document.execCommand('copy');
-    alert('복사 완료! 이제 검사기 버튼을 눌러주세요.');
-  });
+  const text = el('spell-ext-area').value.trim();
+  if(!text){ alert('검사할 글을 먼저 입력해주세요.'); return; }
+  navigator.clipboard.writeText(text)
+    .then(()=>alert('복사 완료! 이제 검사기 버튼을 눌러주세요.'))
+    .catch(()=>{ el('spell-ext-area').select(); document.execCommand('copy'); alert('복사 완료!'); });
 }
+
 function openSpell(site){
-  const urls={
+  const urls = {
     saramin:'https://www.saramin.co.kr/zf_user/tools/spell-check',
     naver:'https://search.naver.com/search.naver?where=nexearch&query=%EB%A7%9E%EC%B6%A4%EB%B2%95+%EA%B2%80%EC%82%AC%EA%B8%B0'
   };
   window.open(urls[site],'_blank');
 }
+
 function copyForClaude(){
-  const text=el('spell-ai-area').value.trim();
-  if(!text){alert('교정할 글을 먼저 입력해주세요.');return;}
-  const prompt='다음 글의 맞춤법과 띄어쓰기를 교정해줘:\n\n'+text;
-  navigator.clipboard.writeText(prompt).then(()=>{
-    alert('교정 요청 문구가 복사됐어요.\nClaude.ai에서 붙여넣기 하세요!');
-    window.open('https://claude.ai','_blank');
-  }).catch(()=>{
-    window.open('https://claude.ai','_blank');
-  });
+  const text = el('spell-ai-area').value.trim();
+  if(!text){ alert('교정할 글을 먼저 입력해주세요.'); return; }
+  const prompt = '다음 글의 맞춤법과 띄어쓰기를 교정해줘:\n\n'+text;
+  navigator.clipboard.writeText(prompt)
+    .then(()=>{ alert('복사됐어요! Claude.ai에서 붙여넣기 하세요.'); window.open('https://claude.ai','_blank'); })
+    .catch(()=>window.open('https://claude.ai','_blank'));
 }
-function copyText(id){navigator.clipboard.writeText(el(id).value).then(()=>alert('복사되었어요!'));}
-function copyElem(id){navigator.clipboard.writeText(el(id).innerText||el(id).value||'').then(()=>alert('복사되었어요!'));}
-function importNote(tid){const b=el('note-area').value;if(!b){alert('노트가 비어있어요.');return;}el(tid).value=b;}
-async function runAISpell(){
-  const text=el('spell-ai-area').value.trim();
-  if(!text){alert('교정할 글을 입력해주세요.');return;}
-  const res=el('ai-result');
-  res.style.fontStyle='italic';res.style.color='var(--ink4)';res.textContent='교정 중…';
-  try{
-    const r=await fetch('https://api.anthropic.com/v1/messages',{method:'POST',headers:{'Content-Type':'application/json'},
-      body:JSON.stringify({model:'claude-sonnet-4-20250514',max_tokens:1000,
-        messages:[{role:'user',content:`아래 한국어 글의 맞춤법과 띄어쓰기를 교정해 주세요.\n\n형식:\n【교정된 글】\n(교정 결과)\n\n【교정 항목】\n1. 원문: "..." → 교정: "..." (이유)\n\n글:\n${text}`}]})});
-    const data=await r.json();
-    const txt=data.content?.map(c=>c.text||'').join('')||'결과 없음';
-    res.style.fontStyle='normal';res.style.color='var(--ink2)';
-    res.innerHTML=esc(txt).replace(/【(.+?)】/g,'<strong style="color:var(--warm);letter-spacing:0.04em">【$1】</strong>');
-  }catch(e){res.textContent='오류: '+e.message;}
-}
+
+function copyText(id){ navigator.clipboard.writeText(el(id).value).then(()=>alert('복사되었어요!')); }
+function copyElem(id){ navigator.clipboard.writeText(el(id).innerText||el(id).value||'').then(()=>alert('복사되었어요!')); }
+function importNote(tid){ const b=el('note-area').value; if(!b){alert('노트가 비어있어요.');return;} el(tid).value=b; }
 
 /* ARCHIVE */
 function changeArchiveMonth(d){
-  archM+=d;if(archM>11){archM=0;archY++;}if(archM<0){archM=11;archY--;}renderArchive();
+  archM+=d;
+  if(archM>11){archM=0;archY++;} if(archM<0){archM=11;archY--;}
+  renderArchive();
 }
+
 function renderArchive(){
   const months=['January','February','March','April','May','June','July','August','September','October','November','December'];
   el('archive-month-label').textContent=`${archY} · ${months[archM]}`;
@@ -702,9 +687,13 @@ function renderArchive(){
     .forEach(i=>all.push({dateKey:i.dateKey,time:i.date.slice(11),type:'basket',cat:i.cat,text:i.content}));
   S.versions.filter(v=>v.dateKey&&v.dateKey.startsWith(prefix))
     .forEach(v=>all.push({dateKey:v.dateKey,time:v.date.slice(11),type:'note',label:v.label,title:v.title,text:v.body}));
-  if(!all.length){el('archive-count').textContent='';el('tl-scroll').innerHTML='<div class="tl-empty">이 달의 기록이 없습니다</div>';return;}
+  if(!all.length){
+    el('archive-count').textContent='';
+    el('tl-scroll').innerHTML='<div class="tl-empty">이 달의 기록이 없습니다</div>';
+    return;
+  }
   const byDay={};
-  all.forEach(r=>{if(!byDay[r.dateKey])byDay[r.dateKey]=[];byDay[r.dateKey].push(r);});
+  all.forEach(r=>{ if(!byDay[r.dateKey]) byDay[r.dateKey]=[]; byDay[r.dateKey].push(r); });
   const days=Object.keys(byDay).sort((a,b)=>b.localeCompare(a));
   el('archive-count').textContent=all.length+' records';
   el('tl-scroll').innerHTML=days.map((dk,di)=>{
@@ -732,22 +721,22 @@ function renderArchive(){
   }).join('');
 }
 
-/* BACKUP */
+/* BACKUP / RESTORE */
 function openBackup(){
   persist();
-  const json=JSON.stringify(S,null,2);
+  const json = JSON.stringify(S,null,2);
   el('modal-title').textContent='데이터 백업';
   el('modal-desc').textContent='JSON 파일로 저장하거나 텍스트를 복사해 보관하세요.';
-  el('modal-ta').readOnly=true;el('modal-ta').value=json;el('modal-btns').innerHTML='';
-  const dl=document.createElement('button');dl.className='btn btn-dark';dl.textContent='📁 파일로 저장';
+  el('modal-ta').readOnly=true; el('modal-ta').value=json; el('modal-btns').innerHTML='';
+  const dl=document.createElement('button'); dl.className='btn btn-dark'; dl.textContent='📁 파일로 저장';
   dl.onclick=()=>{
     const a=document.createElement('a');
     a.href=URL.createObjectURL(new Blob([json],{type:'application/json'}));
-    a.download='geul-backup-'+fmtF(new Date())+'.json';a.click();
+    a.download='geul-backup-'+fmtF(new Date())+'.json'; a.click();
   };
-  const cb=document.createElement('button');cb.className='btn';cb.textContent='텍스트 복사';
+  const cb=document.createElement('button'); cb.className='btn'; cb.textContent='텍스트 복사';
   cb.onclick=()=>navigator.clipboard.writeText(json).then(()=>alert('복사되었어요!'));
-  const cl=document.createElement('button');cl.className='btn';cl.textContent='닫기';cl.onclick=closeModal;
+  const cl=document.createElement('button'); cl.className='btn'; cl.textContent='닫기'; cl.onclick=closeModal;
   el('modal-btns').append(dl,cb,cl);
   el('modal-overlay').classList.add('open');
 }
@@ -755,67 +744,67 @@ function openBackup(){
 function openRestore(){
   el('modal-title').textContent='데이터 복구';
   el('modal-desc').textContent='백업 파일을 선택하거나 JSON 텍스트를 붙여넣으세요.';
-  el('modal-ta').readOnly=false;el('modal-ta').value='';el('modal-btns').innerHTML='';
-
-  // 파일 선택 input (숨김)
+  el('modal-ta').readOnly=false; el('modal-ta').value=''; el('modal-btns').innerHTML='';
   const fileInput=document.createElement('input');
-  fileInput.type='file';fileInput.accept='.json,application/json';
-  fileInput.style.display='none';
+  fileInput.type='file'; fileInput.accept='.json,application/json'; fileInput.style.display='none';
   fileInput.onchange=e=>{
-    const file=e.target.files[0];if(!file)return;
+    const file=e.target.files[0]; if(!file)return;
     const reader=new FileReader();
-    reader.onload=ev=>{el('modal-ta').value=ev.target.result;};
+    reader.onload=ev=>{ el('modal-ta').value=ev.target.result; };
     reader.readAsText(file);
   };
   document.body.appendChild(fileInput);
-
-  const fb=document.createElement('button');fb.className='btn btn-dark';fb.textContent='📁 파일 선택';
+  const fb=document.createElement('button'); fb.className='btn btn-dark'; fb.textContent='📁 파일 선택';
   fb.onclick=()=>fileInput.click();
-
-  const rv=document.createElement('button');rv.className='btn';rv.textContent='복구 실행';
+  const rv=document.createElement('button'); rv.className='btn'; rv.textContent='복구 실행';
   rv.onclick=()=>{
     try{
       const parsed=JSON.parse(el('modal-ta').value);
-      if(!parsed.items||!parsed.versions)throw new Error('올바른 백업 파일이 아닙니다.');
-      if(!confirm('현재 데이터를 덮어쓸까요?'))return;
+      if(!parsed.items||!parsed.versions) throw new Error('올바른 백업 파일이 아닙니다.');
+      if(!confirm('현재 데이터를 덮어쓸까요?')) return;
       S={...S,...parsed};
-      persist();renderItems();renderVersions();renderChips();drawPapers();updateHomeBadge();
-      el('note-title').value=S.note.title||'';el('note-area').value=S.note.body||'';
+      persist(); renderItems(); renderVersions(); drawPapers(); updateHomeBadge();
+      el('note-title').value=S.note.title||''; el('note-area').value=S.note.body||'';
       document.body.removeChild(fileInput);
-      closeModal();alert('복구 완료!');
-    }catch(e){alert('오류: '+e.message);}
+      closeModal(); alert('복구 완료!');
+    }catch(e){ alert('오류: '+e.message); }
   };
-  const cl=document.createElement('button');cl.className='btn';cl.textContent='취소';
-  cl.onclick=()=>{document.body.removeChild(fileInput);closeModal();};
+  const cl=document.createElement('button'); cl.className='btn'; cl.textContent='취소';
+  cl.onclick=()=>{ document.body.removeChild(fileInput); closeModal(); };
   el('modal-btns').append(fb,rv,cl);
   el('modal-overlay').classList.add('open');
 }
-function closeModal(){el('modal-overlay').classList.remove('open');}
+
+function closeModal(){ el('modal-overlay').classList.remove('open'); }
 
 function updateHomeBadge(){
-  const n=S.items.length,b=el('home-badge');
-  if(n===0){b.style.display='none';}
-  else{b.style.display='flex';b.textContent=n>99?'99+':String(n);}
+  const n=S.items.length, b=el('home-badge');
+  if(n===0){ b.style.display='none'; }
+  else{ b.style.display='flex'; b.textContent=n>99?'99+':String(n); }
 }
 
 /* UTILS */
-function fmt(d){return `${d.getFullYear()}.${p2(d.getMonth()+1)}.${p2(d.getDate())} ${p2(d.getHours())}:${p2(d.getMinutes())}`;}
-function dkey(d){return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`;}
-function fmtF(d){return `${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}`;}
-function p2(n){return String(n).padStart(2,'0');}
-function esc(s){return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>');}
-function escA(s){return s.replace(/'/g,"&#39;").replace(/"/g,'&quot;');}
+function fmt(d){ return `${d.getFullYear()}.${p2(d.getMonth()+1)}.${p2(d.getDate())} ${p2(d.getHours())}:${p2(d.getMinutes())}`; }
+function dkey(d){ return `${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`; }
+function fmtF(d){ return `${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}`; }
+function p2(n){ return String(n).padStart(2,'0'); }
+function esc(s){ return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
+function escA(s){ return s.replace(/'/g,"&#39;").replace(/"/g,'&quot;'); }
 
 /* INIT */
-load();drawPapers();renderItems();renderVersions();
-el('note-title').value=S.note.title||'';
-el('note-area').value=S.note.body||'';
-lastAuto=S.note.body||'';
+load();
+drawPapers();
+renderItems();
+renderVersions();
+el('note-title').value = S.note.title||'';
+el('note-area').value  = S.note.body||'';
+lastAuto = S.note.body||'';
 badge('—','var(--ink4)');
 updateHomeBadge();
-el('note-area').addEventListener('input',()=>{persist();badge('editing…','var(--ink3)');});
-el('note-title').addEventListener('input',persist);
+el('note-area').addEventListener('input', ()=>{ persist(); badge('editing…','var(--ink3)'); });
+el('note-title').addEventListener('input', persist);
 startAutoSave();
 </script>
+
 </body>
 </html>
