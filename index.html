@@ -279,6 +279,8 @@ input:focus, textarea:focus, select:focus { outline:none; border-color:var(--ink
         <button id="vt-desktop" onclick="setView('desktop')">데스크톱</button>
       </div>
       <button onclick="goSplash()" style="background:none;border:none;padding:0;cursor:pointer;font-size:1.2rem;line-height:1;filter:grayscale(1) opacity(0.5);display:flex;align-items:center;gap:3px;-webkit-tap-highlight-color:transparent;">🧺<span id="home-badge" style="display:none;min-width:14px;height:14px;background:#2c2a26;color:#fff;font-size:0.52rem;font-weight:700;border-radius:7px;align-items:center;justify-content:center;padding:0 3px;line-height:1;font-family:sans-serif;"></span></button>
+      <button class="btn btn-sm" onclick="openBackup()">↑ 백업</button>
+      <button class="btn btn-sm" onclick="openRestore()">↓ 복구</button>
       <button class="btn btn-sm btn-danger" onclick="doLogout()">로그아웃</button>
     </div>
   </div>
@@ -855,12 +857,68 @@ async function deleteArchiveVersion(docId, vIdx) {
   await sbUpsertDoc(doc);
 }
 
+function openBackup() {
+  const json = JSON.stringify(S, null, 2);
+  el('modal-title').textContent = '데이터 백업';
+  el('modal-desc').textContent  = 'JSON 파일로 저장하거나 텍스트를 복사해 보관하세요.';
+  el('modal-ta').readOnly = true; el('modal-ta').value = json; el('modal-btns').innerHTML = '';
+  const dl = document.createElement('button'); dl.className = 'btn btn-dark'; dl.textContent = '📁 파일로 저장';
+  dl.onclick = () => { const a = document.createElement('a'); a.href = URL.createObjectURL(new Blob([json],{type:'application/json'})); a.download = 'geul-backup-'+fmtF(new Date())+'.json'; a.click(); };
+  const cb = document.createElement('button'); cb.className = 'btn'; cb.textContent = '텍스트 복사';
+  cb.onclick = () => navigator.clipboard.writeText(json).then(() => alert('복사되었어요!'));
+  const cl = document.createElement('button'); cl.className = 'btn'; cl.textContent = '닫기'; cl.onclick = closeModal;
+  el('modal-btns').append(dl, cb, cl); el('modal-overlay').classList.add('open');
+}
+
+let _restoreFileInput = null;
+function openRestore() {
+  el('modal-title').textContent = '데이터 복구';
+  el('modal-desc').textContent  = '백업 파일을 선택하거나 JSON 텍스트를 붙여넣으세요.';
+  el('modal-ta').readOnly = false; el('modal-ta').value = ''; el('modal-btns').innerHTML = '';
+  _restoreFileInput = document.createElement('input');
+  _restoreFileInput.type = 'file'; _restoreFileInput.accept = '.json,application/json'; _restoreFileInput.style.display = 'none';
+  _restoreFileInput.onchange = e => {
+    const file = e.target.files[0]; if (!file) return;
+    const reader = new FileReader();
+    reader.onload = ev => { el('modal-ta').value = ev.target.result; };
+    reader.readAsText(file);
+  };
+  document.body.appendChild(_restoreFileInput);
+  const fb = document.createElement('button'); fb.className = 'btn btn-dark'; fb.textContent = '📁 파일 선택'; fb.onclick = () => _restoreFileInput.click();
+  const rv = document.createElement('button'); rv.className = 'btn'; rv.textContent = '복구 실행';
+  rv.onclick = () => {
+    try {
+      const parsed = JSON.parse(el('modal-ta').value);
+      if (!parsed.items) throw new Error('올바른 백업 파일이 아닙니다.');
+      if (!confirm('현재 데이터를 덮어쓸까요?')) return;
+      S = {...S, ...parsed}; if (!S.docs) S.docs = [];
+      curDocId = null;
+      renderItems(); renderDocSelect(); drawPapers(); updateHomeBadge();
+      el('note-editor-controls').style.display = 'none';
+      el('note-no-sel').style.display = 'flex';
+      el('note-area').style.display = 'none';
+      el('ver-section').classList.remove('visible');
+      closeModal(); alert('복구 완료! Supabase에도 반영하려면 글감·노트를 하나씩 저장해주세요.');
+    } catch(e) { alert('오류: ' + e.message); }
+  };
+  const cl = document.createElement('button'); cl.className = 'btn'; cl.textContent = '취소'; cl.onclick = closeModal;
+  el('modal-btns').append(fb, rv, cl); el('modal-overlay').classList.add('open');
+}
+
+function fmtF(d) { return`${d.getFullYear()}${p2(d.getMonth()+1)}${p2(d.getDate())}`; }
+
 function fmt(d)  { return`${d.getFullYear()}.${p2(d.getMonth()+1)}.${p2(d.getDate())} ${p2(d.getHours())}:${p2(d.getMinutes())}`; }
 function dkey(d) { return`${d.getFullYear()}-${p2(d.getMonth()+1)}-${p2(d.getDate())}`; }
 function p2(n)   { return String(n).padStart(2,'0'); }
 function esc(s)  { return String(s).replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/\n/g,'<br>'); }
 function updateHomeBadge() { const n=S.items.length,b=el('home-badge'); if(n===0){b.style.display='none';}else{b.style.display='flex';b.textContent=n>99?'99+':String(n);} }
-function closeModal() { el('modal-overlay').classList.remove('open'); }
+function closeModal() {
+  el('modal-overlay').classList.remove('open');
+  if (_restoreFileInput) {
+    if (_restoreFileInput.parentNode) document.body.removeChild(_restoreFileInput);
+    _restoreFileInput = null;
+  }
+}
 
 initView();
 sb.auth.getSession().then(({ data: { session } }) => {
