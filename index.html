@@ -479,6 +479,7 @@ let archY = new Date().getFullYear(), archM = new Date().getMonth();
 let lastAIResult = '';
 let currentUser = null;
 let isSignupMode = false;
+let lastLoadTime = 0;
 
 function el(id) { return document.getElementById(id); }
 
@@ -559,6 +560,7 @@ async function loadFromSupabase() {
   ]);
   S.items = (items || []).map(r => ({ id:r.id, cat:r.cat, content:r.content, date:r.date, dateKey:r.date_key }));
   S.docs  = (docs  || []).map(r => ({ id:r.id, title:r.title, body:r.body, versions:r.versions||[], createdAt:r.created_at, updatedAt:r.updated_at }));
+  lastLoadTime = Date.now();
   syncBadge('✓ 동기화됨');
 }
 
@@ -635,8 +637,13 @@ async function addItem() {
   el('new-content').value = '';
   renderItems(); drawPapers(); updateHomeBadge();
   syncBadge('저장 중…');
-  await sbUpsertItem(item);
-  syncBadge('✓ 동기화됨');
+  try {
+    await sbUpsertItem(item);
+    syncBadge('✓ 동기화됨');
+  } catch(e) {
+    syncBadge('⚠ 저장 실패 — 재시도 중…');
+    try { await sbUpsertItem(item); syncBadge('✓ 동기화됨'); } catch(e2) { syncBadge('⚠ 저장 실패'); }
+  }
 }
 
 async function deleteItem(id) {
@@ -950,7 +957,31 @@ sb.auth.getSession().then(({ data: { session } }) => {
   if (session) { onLogin(session.user); }
 });
 sb.auth.onAuthStateChange((_event, session) => {
-  if (!session && currentUser) doLogout();
+  // 세션 복구 (사파리 완전 종료 후 재실행 포함)
+  if (session && !currentUser) {
+    onLogin(session.user);
+  } else if (!session && currentUser) {
+    doLogout();
+  }
+});
+
+// 사파리 백그라운드→포그라운드 복귀 시 최신 데이터 새로고침
+// 마지막 로드 후 60초 이상 지났을 때만 새로고침 (복구 직후 덮어씌우기 방지)
+document.addEventListener('visibilitychange', async () => {
+  if (document.visibilityState === 'visible' && currentUser) {
+    const now = Date.now();
+    if (now - lastLoadTime < 60000) return; // 60초 이내면 스킵
+    await loadFromSupabase();
+    renderItems(); renderDocSelect(); updateHomeBadge(); drawPapers();
+    if (curDocId) {
+      const doc = S.docs.find(d => d.id === curDocId);
+      if (doc) {
+        el('doc-title').value = doc.title || '';
+        el('note-area').value = doc.body || '';
+        renderDocVersions();
+      }
+    }
+  }
 });
 </script>
 </body>
